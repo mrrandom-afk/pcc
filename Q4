@@ -1,0 +1,59 @@
+#include <stdio.h>
+#define SIZE 5
+
+int q[SIZE];
+int f = -1, r = -1;
+
+int main() {
+    int ch, x, i;
+
+    while (1) {
+        printf("\n1 Enq 2 Deq 3 Show 4 Exit\nEnter: ");
+        
+        if (scanf("%d", &ch) != 1) {
+            printf("Invalid input\n");
+            return 0;
+        }
+
+        switch (ch) {
+            case 1:
+                if (r == SIZE - 1)
+                    printf("Full\n");
+                else {
+                    if (f == -1) f = 0;
+                    printf("Value: ");
+                    scanf("%d", &x);
+                    q[++r] = x;
+                }
+                break;
+
+            case 2:
+                if (f == -1)
+                    printf("Empty\n");
+                else {
+                    printf("Removed: %d\n", q[f]);
+                    if (f == r) f = r = -1;
+                    else f++;
+                }
+                break;
+
+            case 3:
+                if (f == -1)
+                    printf("Empty\n");
+                else {
+                    for (i = f; i <= r; i++)
+                        printf("%d ", q[i]);
+                }
+                break;
+
+            case 4:
+                printf("Exiting...\n");
+                return 0;   // 🔥 IMPORTANT FIX
+
+            default:
+                printf("Wrong choice\n");
+        }
+    }
+}
+
+
