@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+int main() {
+    struct node *head = NULL, *temp, *newnode;
+    int choice = 1;
+
+    while (choice) {
+        newnode = malloc(sizeof(struct node));
+
+        printf("Enter data: ");
+        scanf("%d", &newnode->data);
+
+        newnode->next = NULL;
+
+        if (!head)
+            head = temp = newnode;
+        else {
+            temp->next = newnode;
+            temp = newnode;
+        }
+
+        printf("Continue? (1/0): ");
+        scanf("%d", &choice);
+    }
+
+    printf("\nList:\n");
+    temp = head;
+
+    while (temp) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL");
+
+    return 0;
+}
+
+
+
