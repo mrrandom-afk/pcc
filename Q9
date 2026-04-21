@@ -1,0 +1,120 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+struct node *front = NULL, *rear = NULL;
+
+/* Insert Front */
+void insertFront() {
+    struct node *n = (struct node*)malloc(sizeof(struct node));
+    if (!n) return;
+
+    printf("Enter value: ");
+    scanf("%d", &n->data);
+
+    n->next = front;
+    front = n;
+
+    if (rear == NULL)
+        rear = n;
+}
+
+/* Insert Rear */
+void insertRear() {
+    struct node *n = (struct node*)malloc(sizeof(struct node));
+    if (!n) return;
+
+    printf("Enter value: ");
+    scanf("%d", &n->data);
+
+    n->next = NULL;
+
+    if (rear == NULL)
+        front = rear = n;
+    else {
+        rear->next = n;
+        rear = n;
+    }
+}
+
+/* Delete Front */
+void deleteFront() {
+    if (front == NULL) {
+        printf("Deque Empty\n");
+        return;
+    }
+
+    struct node *t = front;
+    printf("Deleted: %d\n", t->data);
+
+    front = front->next;
+    if (front == NULL)
+        rear = NULL;
+
+    free(t);
+}
+
+/* Delete Rear */
+void deleteRear() {
+    if (rear == NULL) {
+        printf("Deque Empty\n");
+        return;
+    }
+
+    if (front == rear) {
+        printf("Deleted: %d\n", rear->data);
+        free(rear);
+        front = rear = NULL;
+        return;
+    }
+
+    struct node *t = front;
+    while (t->next != rear)
+        t = t->next;
+
+    printf("Deleted: %d\n", rear->data);
+    free(rear);
+    rear = t;
+    rear->next = NULL;
+}
+
+/* Display */
+void display() {
+    struct node *t = front;
+
+    if (t == NULL) {
+        printf("Deque Empty\n");
+        return;
+    }
+
+    printf("Deque: ");
+    while (t != NULL) {
+        printf("%d ", t->data);
+        t = t->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    int ch;
+
+    while (1) {
+        printf("\n1.Insert Front\n2.Insert Rear\n3.Delete Front\n4.Delete Rear\n5.Display\n6.Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &ch);
+
+        switch (ch) {
+            case 1: insertFront(); break;
+            case 2: insertRear(); break;
+            case 3: deleteFront(); break;
+            case 4: deleteRear(); break;
+            case 5: display(); break;
+            case 6: exit(0);
+            default: printf("Invalid\n");
+        }
+    }
+}
